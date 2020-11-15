@@ -2,7 +2,7 @@ lista    = []
 filas    = 3
 columnas = 3
 espacios = filas * columnas
---matrizVacia = crearMatriz 0 filas columnas
+--matrizVacia = crearMatriz filas columnas
 
 --sudoku1 = insertarEnMatriz [(2,0,0)] matrizVacia
 --sudoku2 = insertarEnMatriz [(5,0,1)] sudoku1
