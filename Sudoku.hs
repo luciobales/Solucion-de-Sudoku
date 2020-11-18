@@ -2,7 +2,7 @@ lista    = []
 filas    = 3
 columnas = 3
 espacios = filas * columnas
---matrizVacia = crearMatriz filas columnas
+matrizVacia = crearMatriz filas columnas
 
 --sudoku1 = insertarEnMatriz [(2,0,0)] matrizVacia
 --sudoku2 = insertarEnMatriz [(5,0,1)] sudoku1
@@ -48,37 +48,36 @@ menu2 lista1 = do putStr "Numero: "
                    then menu2 lista2
                    else putStrLn (show lista2) --"Comenzemos!"
 
+-- Ver de crear un menu3 para mostrar sudoku y otras opcs
+
 -- Funcion que añade numeros ingresados del menu a la lista
 ingresarNumeros :: Integer -> Integer -> Integer -> [(Integer,Integer,Integer)] -> [(Integer,Integer,Integer)]
 ingresarNumeros num fila colu []     = [(num, fila, colu)]
 ingresarNumeros num fila colu (y:ys) = y:ingresarNumeros num fila colu ys
 
+
 -- Funcion que crea una matriz vacia
 crearMatriz :: Integer -> Integer -> [(Integer,Integer,Integer)]
-crearMatriz 0 0  = [(0,fila,columna)]
-crearMatriz fila 0 = (0,(3-fila),0) : (crearMatriz (3-fila) 0)
-crearMatriz 0 columna = (0,0,(3-columna)) : (crearMatriz 0 0 (3-columna))
---crearMatriz valor filas columnas = (crearMatriz 0 (columnas-1) (filas-1)) : (0, filas, columnas)
---crearMatriz valor filas columnas = (0,filas, columnas) : (crearMatriz (inicio+1) ((filas*columnas)-1))
+crearMatriz 1 1 = [(0,1,1)]
+crearMatriz fila columna = if columna == 1
+                            then (crearMatriz (fila-1) (columna+2)) ++ [(0,fila,columna)]
+                            else (crearMatriz fila (columna-1)) ++ [(0,fila,columna)]
+--crearMatriz fila columna = (crearMatriz fila (columna-1)) ++ [(0,fila,columna)]
 
--- Funcion que inserta numeros de la lista a la matriz
---insertarEnMatriz :: [(Integer,Integer,Integer)] -> [(Integer,Integer,Integer)] -> [(Integer,Integer,Integer)]
---insertarEnMatriz [(num, fila, colu)] ((x,y,z):xs) = if (fila == 1 and colu == 0)
---                                                     then (a,b):xs
---                                                     else (x,y) : insertarEnMatriz [(a,b)] xs
+
+-- -- Funcion que inserta numeros de la lista a la matriz
+-- insertarEnMatriz :: [(Integer,Integer,Integer)] -> [(Integer,Integer,Integer)] -> [(Integer,Integer,Integer)]
+-- insertarEnMatriz [(num, fila, colu)] ((x,y,z):xs) = if fila == x
+--                                                      then if colu == y
+--                                                            then (num, fila, colu) : xs
+--                                                            else (x,y,z) : insertarEnMatriz [(num, fila, colu)] xs
+
+
 
 -- Funcion que imprime por pantalla la matriz
---mostrarMatriz :: [(Integer,Integer)] -> IO()
---mostrarMatriz [(x,8)] = putStrLn (" " ++ show x)
---mostrarMatriz ((x,y):xs) = do if y == 2
---                               then putStr (" " ++ show x ++ "\n")
---                               else if y == 5 
---                                     then putStr (" " ++ show x ++ "\n")
---                                     else putStr (" " ++ show x ++ " ")
---                              mostrarMatriz (xs)
-                     
-
-
-
-
-
+mostrarMatriz :: [(Integer,Integer,Integer)] -> IO()
+mostrarMatriz [(x,3,3)] = putStrLn (" " ++ show x)
+mostrarMatriz ((x,y,z):xs) = do if z == 3
+                                 then putStr (" " ++ show x ++ "\n")
+                                 else putStr (" " ++ show x ++ " ")
+                                mostrarMatriz (xs)
